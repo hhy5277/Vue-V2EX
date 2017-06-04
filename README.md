@@ -27,3 +27,5 @@ npm run e2e
 npm test
 ```
 
+## LICENSE
+[MIT](https://github.com/igaozp/vue-v2ex/blob/master/LICENSE)
