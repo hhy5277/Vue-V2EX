@@ -63,5 +63,19 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  preLoaders:[
+    {
+      test: /\.vue$/,
+      loader: 'eslint',
+      include: projectRoot,
+      exclude: [/node_modules/, /ignore_lib/]
+    },
+    {
+      test: /\.js$/,
+      loader: 'eslint',
+      include: projectRoot,
+      exclude: [/node_modules/, /ignore_lib/]
+    }
+  ]
 }
