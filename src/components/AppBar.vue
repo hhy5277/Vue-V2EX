@@ -2,11 +2,15 @@
 <div>
   <div class="app-bar">
     <mu-appbar title="V2EX">
-      <mu-icon-button icon="menu" slot="left"/>
-      <!--<mu-flat-button label="V2EX" slot="left"/>-->
-      <!--<mu-flat-button label="expand_more" slot="right"/>
-      <mu-flat-button href="333" label="expand_more" slot="right"/>-->
+      <mu-icon-button icon="menu" slot="left" @click="toggle(true)"/>
       <mu-icon-button icon="expand_more" slot="right"/>
+      <mu-drawer :open="open" :docked="docked" @close="toggle()">
+        <mu-list @itemClick="docked ? '' : toggle()">
+          <mu-list-item title="Item 1"/>
+          <mu-list-item title="Item 2"/>
+          <mu-list-item v-if="docked" @click.native="open = false" title="Close"/>
+        </mu-list>
+      </mu-drawer>
     </mu-appbar>
   </div>
   <div class="app-tabs">
@@ -81,13 +85,18 @@ export default {
   name: 'hello',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
-      activeTab: 'tab1'
+      activeTab: 'tab1',
+      open: false,
+      docked: true
     }
   },
   methods: {
     handleTabChange (val) {
       this.activeTab = val
+    },
+    toggle (flag) {
+      this.open = !this.open
+      this.docked = !flag
     }
   }
 }
