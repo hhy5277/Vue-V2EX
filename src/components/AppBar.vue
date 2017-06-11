@@ -35,6 +35,9 @@
     <div v-if="activeTab === 'tab2'">
       <h2>最热</h2>
       <p>这是第2个 tab</p>
+      <p v-for="item in articles">
+        <span>item</span>
+      </p>
     </div>
     <div v-if="activeTab === 'tab3'">
       <h2>技术</h2>
@@ -81,13 +84,16 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'hello',
   data () {
     return {
       activeTab: 'tab1',
       open: false,
-      docked: true
+      docked: true,
+      articles: null
     }
   },
   methods: {
@@ -98,6 +104,14 @@ export default {
       this.open = !this.open
       this.docked = !flag
     }
+  },
+  created: function () {
+    axios.get('https://www.v2ex.com/api/topics/hot.json').then(function (response) {
+      this.articles = response.data
+      console.log(response.data)
+    }).catch(function (error) {
+      console.log(error)
+    })
   }
 }
 </script>
