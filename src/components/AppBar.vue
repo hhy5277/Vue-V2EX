@@ -84,8 +84,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'hello',
   data () {
@@ -105,8 +103,10 @@ export default {
       this.docked = !flag
     }
   },
-  created() {
-    this.$store.commit('getHot')
+  created () {
+    this.$store.dispatch('getHot', {
+        state: this.$store.state
+    })
   }
 //  created: function () {
 //    axios.get('https://www.v2ex.com/api/topics/hot.json').then(function (response) {
