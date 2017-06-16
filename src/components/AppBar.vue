@@ -105,14 +105,17 @@ export default {
       this.docked = !flag
     }
   },
-  created: function () {
-    axios.get('https://www.v2ex.com/api/topics/hot.json').then(function (response) {
-      this.articles = response.data
-      console.log(response.data)
-    }).catch(function (error) {
-      console.log(error)
-    })
+  created() {
+    this.$store.commit('getHot')
   }
+//  created: function () {
+//    axios.get('https://www.v2ex.com/api/topics/hot.json').then(function (response) {
+//      this.articles = response.data
+//      console.log(response.data)
+//    }).catch(function (error) {
+//      console.log(error)
+//    })
+//  }
 }
 </script>
 
