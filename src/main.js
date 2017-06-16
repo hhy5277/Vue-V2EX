@@ -5,6 +5,7 @@ import Axios from 'axios'
 import VueAxios from 'vue-axios'
 import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
+import store from './store/index'
 
 Vue.config.productionTip = false
 Vue.use(MuseUI)
@@ -14,6 +15,7 @@ Vue.use(Axios, VueAxios)
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })
