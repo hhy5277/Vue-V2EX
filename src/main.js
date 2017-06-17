@@ -9,7 +9,7 @@ import store from './store/index'
 
 Vue.config.productionTip = false
 Vue.use(MuseUI)
-Vue.use(Axios, VueAxios)
+Vue.use(VueAxios, Axios)
 
 /* eslint-disable no-new */
 new Vue({

@@ -97,6 +97,7 @@
             break
           case 'hot':
             console.log('hot')
+//            this.$store.dispatch('getHot')
             break
           case 'tech':
             console.log('tech')

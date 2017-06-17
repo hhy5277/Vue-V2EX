@@ -1,4 +1,5 @@
 export default {
+  domain: 'https://www.v2ex.com',
   api: {
     latest: '/api/topics/latest.json', // 最新内容
     hot: '/api/topics/hot.json', // 热门内容
