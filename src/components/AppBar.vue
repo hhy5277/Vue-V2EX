@@ -35,9 +35,6 @@
     <div v-if="activeTab === 'tab2'">
       <h2>最热</h2>
       <p>这是第2个 tab</p>
-      <p v-for="item in articles">
-        <span>item</span>
-      </p>
     </div>
     <div v-if="activeTab === 'tab3'">
       <h2>技术</h2>
