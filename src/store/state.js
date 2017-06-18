@@ -9,11 +9,12 @@ export default {
     commit: '/api/replies/show.json?topic_id=', // 指定文章的评论
     article: '/api/topics/show.json?id=' // 指定文章
   },
-  // 存储最新的文章和评论数据
+  // 存储最新的数据
   latestJSON: {
-    current: null,
-    article: null,
-    commit: null
+    current: null, // 最近请求的API
+    articles: null, // 最新的文章列表
+    commits: null // 最新的评论列表
   },
-  remainRequest: null
+  remainRequest: null,
+  nodes: null
 }
