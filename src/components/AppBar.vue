@@ -29,7 +29,7 @@
                 <mu-card-header :title="article.member.username">
                   <mu-avatar :src="article.member.avatar_normal" slot="avatar"></mu-avatar>
                 </mu-card-header>
-                <mu-card-title :title="article.title"></mu-card-title>
+                <a :href="article.url"><mu-card-title :title="article.title"></mu-card-title></a>
                 <mu-card-text v-html="article.content_rendered"></mu-card-text>
               </mu-card>
             </mu-col>
@@ -46,7 +46,7 @@
                 <mu-card-header :title="article.member.username">
                   <mu-avatar :src="article.member.avatar_normal" slot="avatar"></mu-avatar>
                 </mu-card-header>
-                <mu-card-title :title="article.title"></mu-card-title>
+                <a :href="article.url"><mu-card-title :title="article.title"></mu-card-title></a>
                 <mu-card-text v-html="article.content_rendered"></mu-card-text>
               </mu-card>
             </mu-col>
@@ -63,7 +63,7 @@
                 <mu-card-header :title="article.member.username">
                   <mu-avatar :src="article.member.avatar_normal" slot="avatar"></mu-avatar>
                 </mu-card-header>
-                <mu-card-title :title="article.title"></mu-card-title>
+                <a :href="article.url"><mu-card-title :title="article.title"></mu-card-title></a>
                 <mu-card-text v-html="article.content_rendered"></mu-card-text>
               </mu-card>
             </mu-col>
