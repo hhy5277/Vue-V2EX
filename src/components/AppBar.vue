@@ -21,37 +21,58 @@
         <mu-tab value="nodes" title="节点" @click="processTarget('nodes')"></mu-tab>
       </mu-tabs>
       <div v-if="activeTab === 'all'">
-        <h2>全部</h2>
         <ul v-for="article in this.$store.state.latestJSON.articles">
-          <li>{{ article.title }}</li>
+          <mu-row gutter>
+            <mu-col desktop="20"></mu-col>
+            <mu-col desktop="60">
+              <mu-card>
+                <mu-card-header :title="article.member.username">
+                  <mu-avatar :src="article.node.avatar_normal" slot="avatar"></mu-avatar>
+                </mu-card-header>
+                <mu-card-title :title="article.title"></mu-card-title>
+                <mu-card-text v-html="article.content_rendered"></mu-card-text>
+              </mu-card>
+            </mu-col>
+            <mu-col desktop="20"></mu-col>
+          </mu-row>
         </ul>
       </div>
       <div v-if="activeTab === 'hot'">
-        <h2>最热</h2>
         <ul v-for="article in this.$store.state.latestJSON.articles">
-          <!--<li>{{ article.title }}</li>-->
-          <mu-card>
-            <mu-card-header :title="article.member.username">
-              <mu-avatar :src="article.node.avatar_normal" slot="avatar"></mu-avatar>
-            </mu-card-header>
-            <mu-card-title :title="article.title">
-
-            </mu-card-title>
-            <mu-card-text v-html="article.content">
-              <!--{{ article.content }}-->
-            </mu-card-text>
-          </mu-card>
+          <mu-row gutter>
+            <mu-col desktop="20"></mu-col>
+            <mu-col desktop="60">
+              <mu-card>
+                <mu-card-header :title="article.member.username">
+                  <mu-avatar :src="article.node.avatar_normal" slot="avatar"></mu-avatar>
+                </mu-card-header>
+                <mu-card-title :title="article.title"></mu-card-title>
+                <mu-card-text v-html="article.content_rendered"></mu-card-text>
+              </mu-card>
+            </mu-col>
+            <mu-col desktop="20"></mu-col>
+          </mu-row>
         </ul>
       </div>
       <div v-if="activeTab === 'tech'">
-        <h2>技术</h2>
         <ul v-for="article in this.$store.state.latestJSON.articles">
-          <li>{{ article.title }}</li>
+          <mu-row gutter>
+            <mu-col desktop="20"></mu-col>
+            <mu-col desktop="60">
+              <mu-card>
+                <mu-card-header :title="article.member.username">
+                  <mu-avatar :src="article.member.avatar_normal" slot="avatar"></mu-avatar>
+                </mu-card-header>
+                <mu-card-title :title="article.title"></mu-card-title>
+                <mu-card-text v-html="article.content_rendered"></mu-card-text>
+              </mu-card>
+            </mu-col>
+            <mu-col desktop="20"></mu-col>
+          </mu-row>
         </ul>
       </div>
       <div v-if="activeTab === 'nodes'">
         <h2>节点</h2>
-        <!--<h2>{{ this.$store.state.nodes.length }}</h2>-->
         <ul v-for="node in this.$store.state.nodes">
           <li>{{ node.title }}</li>
         </ul>
@@ -63,10 +84,16 @@
 <script>
   import MuAvatar from '../../node_modules/muse-ui/src/avatar/avatar'
   import MuCardTitle from '../../node_modules/muse-ui/src/card/cardTitle'
+  import MuFlexbox from '../../node_modules/muse-ui/src/flexbox/flexbox'
+  import MuFlexboxItem from '../../node_modules/muse-ui/src/flexbox/flexboxItem'
+
   export default {
     components: {
+      MuFlexboxItem,
+      MuFlexbox,
       MuCardTitle,
-      MuAvatar},
+      MuAvatar
+    },
     name: 'hello',
     data () {
       return {
@@ -105,31 +132,21 @@
           default:
             console.log('nothing')
         }
+      },
+      created () {
+        this.$store.dispatch('getArticles', 'https://www.v2ex.com/api/topics/latest.json')
+        console.log('Test')
       }
-//      created () {
-//        this.$store.dispatch('getArticles', 'https://www.v2ex.com/api/topics/latest.json')
-//        console.log('Test')
-//      }
     }
   }
 </script>
 
-<style scoped>
+<style>
   h1, h2 {
     font-weight: normal;
   }
 
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
-
-  a {
-    color: #42b983;
+  img {
+    width: calc(100%);
   }
 </style>
