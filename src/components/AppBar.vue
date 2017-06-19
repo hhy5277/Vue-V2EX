@@ -27,7 +27,7 @@
             <mu-col desktop="60">
               <mu-card>
                 <mu-card-header :title="article.member.username">
-                  <mu-avatar :src="article.node.avatar_normal" slot="avatar"></mu-avatar>
+                  <mu-avatar :src="article.member.avatar_normal" slot="avatar"></mu-avatar>
                 </mu-card-header>
                 <mu-card-title :title="article.title"></mu-card-title>
                 <mu-card-text v-html="article.content_rendered"></mu-card-text>
@@ -44,7 +44,7 @@
             <mu-col desktop="60">
               <mu-card>
                 <mu-card-header :title="article.member.username">
-                  <mu-avatar :src="article.node.avatar_normal" slot="avatar"></mu-avatar>
+                  <mu-avatar :src="article.member.avatar_normal" slot="avatar"></mu-avatar>
                 </mu-card-header>
                 <mu-card-title :title="article.title"></mu-card-title>
                 <mu-card-text v-html="article.content_rendered"></mu-card-text>
