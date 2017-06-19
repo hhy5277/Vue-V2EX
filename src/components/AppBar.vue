@@ -18,7 +18,7 @@
         <mu-tab value="all" title="全部" @click="processTarget('all')"></mu-tab>
         <mu-tab value="hot" title="最热" @click="processTarget('hot')"></mu-tab>
         <mu-tab value="tech" title="技术" @click="processTarget('tech')"></mu-tab>
-        <mu-tab value="node" title="节点" @click="processTarget('nodes')"></mu-tab>
+        <mu-tab value="nodes" title="节点" @click="processTarget('nodes')"></mu-tab>
       </mu-tabs>
       <div v-if="activeTab === 'all'">
         <h2>全部</h2>
@@ -29,7 +29,18 @@
       <div v-if="activeTab === 'hot'">
         <h2>最热</h2>
         <ul v-for="article in this.$store.state.latestJSON.articles">
-          <li>{{ article.title }}</li>
+          <!--<li>{{ article.title }}</li>-->
+          <mu-card>
+            <mu-card-header :title="article.member.username">
+              <mu-avatar :src="article.node.avatar_normal" slot="avatar"></mu-avatar>
+            </mu-card-header>
+            <mu-card-title :title="article.title">
+
+            </mu-card-title>
+            <mu-card-text v-html="article.content">
+              <!--{{ article.content }}-->
+            </mu-card-text>
+          </mu-card>
         </ul>
       </div>
       <div v-if="activeTab === 'tech'">
@@ -40,6 +51,7 @@
       </div>
       <div v-if="activeTab === 'nodes'">
         <h2>节点</h2>
+        <!--<h2>{{ this.$store.state.nodes.length }}</h2>-->
         <ul v-for="node in this.$store.state.nodes">
           <li>{{ node.title }}</li>
         </ul>
@@ -49,7 +61,12 @@
 </template>
 
 <script>
+  import MuAvatar from '../../node_modules/muse-ui/src/avatar/avatar'
+  import MuCardTitle from '../../node_modules/muse-ui/src/card/cardTitle'
   export default {
+    components: {
+      MuCardTitle,
+      MuAvatar},
     name: 'hello',
     data () {
       return {
@@ -89,6 +106,10 @@
             console.log('nothing')
         }
       }
+//      created () {
+//        this.$store.dispatch('getArticles', 'https://www.v2ex.com/api/topics/latest.json')
+//        console.log('Test')
+//      }
     }
   }
 </script>

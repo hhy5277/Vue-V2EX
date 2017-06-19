@@ -4,8 +4,8 @@ import router from './router'
 import Axios from 'axios'
 import VueAxios from 'vue-axios'
 import MuseUI from 'muse-ui'
-import 'muse-ui/dist/muse-ui.css'
 import store from './store/index'
+import 'muse-ui/dist/muse-ui.css'
 
 Vue.config.productionTip = false
 Vue.use(MuseUI)
