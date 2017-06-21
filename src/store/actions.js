@@ -16,5 +16,13 @@ export default {
     }).catch((error) => {
       console.log(error)
     })
+  },
+  getReplies ({ state }, id) {
+    axios.get('https://www.v2ex.com/api/replies/show.json?topic_id=' + id).then((response) => {
+      state.replies = response.data
+      console.log('Replies: ' + state.replies.length)
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 }

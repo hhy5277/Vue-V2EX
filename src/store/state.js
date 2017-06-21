@@ -16,5 +16,6 @@ export default {
     commits: null // 最新的评论列表
   },
   remainRequest: null,
-  nodes: null
+  nodes: null, // 节点列表
+  replies: null // 回复列表
 }
