@@ -23,13 +23,12 @@
                   <mu-avatar :src="article.member.avatar_normal" slot="avatar"></mu-avatar>
                 </mu-card-header>
                 <!-- 标题链接 -->
-                <a :href="article.url">
+                <router-link :to="{ name: 'Topic', params: { id: article.id} }">
                   <mu-card-title :title="article.title"></mu-card-title>
-                </a>
+                </router-link>
                 <!-- 渲染过的文章内容 -->
                 <mu-card-text v-html="article.content_rendered"></mu-card-text>
                 <!-- 评论按钮，点击后弹出评论弹框 -->
-                <mu-flat-button label="显示评论" @click="handleOpenPopup('bottom', article.id)" primary></mu-flat-button>
               </mu-card>
             </mu-col>
             <mu-col desktop="20"></mu-col>
@@ -80,38 +79,6 @@
           <li>{{ node.title }}</li>
         </ul>
       </div>
-      <!-- 评论弹框 -->
-      <mu-popup position="bottom" popupClass="popup-bottom" :open="bottomPopup" @click="closePopup('bottom')">
-        <!-- 弹框标题 -->
-        <mu-appbar title="评论">
-          <mu-flat-button slot="right" label="关闭" color="white" @click="closePopup('bottom')"></mu-flat-button>
-        </mu-appbar>
-        <!-- 弹框内容 -->
-        <div class="reply-content">
-          <mu-content-block class="reply-content">
-            <div v-if="this.$store.state.replies && this.$store.state.replies.length === 0">
-              <p>没有回复</p>
-            </div>
-            <div v-else>
-              <ul v-for="reply in this.$store.state.replies">
-                <li>
-                  <mu-row gutter>
-                    <mu-col desktop="10">
-                      <mu-appbar :src="reply.member.avatar_normal" slot="avatar"></mu-appbar>
-                    </mu-col>
-                    <mu-col desktop="15">
-                      <h4>{{ reply.member.username }}</h4>
-                    </mu-col>
-                    <mu-col desktop="75">
-                      {{ reply.content }}
-                    </mu-col>
-                  </mu-row>
-                </li>
-              </ul>
-            </div>
-          </mu-content-block>
-        </div>
-      </mu-popup>
     </div>
   </div>
 </template>
@@ -153,10 +120,6 @@
       handleTabChange (val) {
         this.activeTab = val
       },
-//      toggle (flag) {
-//        this.open = !this.open
-//        this.docked = !flag
-//      },
       handleOpenPopup (position, id) {
         // 响应点击操作
         this.openPopup(position)
@@ -194,7 +157,7 @@
       }
     },
     created () {
-      // 启动时首先加载最新的内容
+      // 启动时首页加载最新的内容
       this.processTarget('latest')
     }
   }
@@ -227,6 +190,17 @@
 
   .reply-content {
     overflow: scroll !important;
+  }
+
+  .reply-username {
+    color: #7e57c2;
+  }
+
+  /* 子元素垂直居中 */
+  .center {
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
   }
 
 </style>

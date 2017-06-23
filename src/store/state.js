@@ -17,5 +17,6 @@ export default {
   },
   remainRequest: null,
   nodes: null, // 节点列表
-  replies: null // 回复列表
+  replies: null, // 回复列表
+  topic: null // 主题信息
 }

@@ -24,5 +24,19 @@ export default {
     }).catch((error) => {
       console.log(error)
     })
+  },
+  getArticleAndReplies ({ state }, id) {
+    axios.get('https://www.v2ex.com/api/topics/show.json?id=' + id).then((response) => {
+      state.topic = response.data[0]
+      console.log('Topic: ' + state.topic)
+    }).catch((error) => {
+      console.log(error)
+    })
+    axios.get('https://www.v2ex.com/api/replies/show.json?topic_id=' + id).then((response) => {
+      state.replies = response.data
+      console.log('Replies: ' + state.replies.length)
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 }
