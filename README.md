@@ -1,6 +1,6 @@
-# Vue-v2ex
+# Vue-V2EX
 
-> A Vue.js project
+> 一个使用 Vue 全家桶及 axios 二次开发的 V2EX 页面
 
 ## Build Setup
 
@@ -8,7 +8,7 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:5000
 npm run dev
 
 # build for production with minification
