@@ -16,12 +16,6 @@ export default {
     userByID: '/api/members/show.json?id=', // 通过 ID 获取用户信息
     replies: '/api/replies/show.json?topic_id=' // 通过 ID 获取指定文章的评论
   },
-  // 存储最新的数据
-  latestJSON: {
-    current: null, // 最近请求的API
-    articles: null, // 最新的文章列表
-    commits: null // 最新的评论列表
-  },
   remainRequest: null,
   nodes: null, // 节点列表
   replies: null, // 回复列表
