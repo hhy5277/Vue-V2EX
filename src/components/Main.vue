@@ -2,7 +2,7 @@
   <div>
     <div class="app-bar">
       <mu-appbar title="V2EX" class="center">
-        <a href="https://github.com/igaozp/vue-v2ex" slot="right">
+        <a href="https://github.com/igaozp/Vue-V2EX" slot="right">
           <img src="../assets/GitHub.png" class="icon"/>
         </a>
       </mu-appbar>
