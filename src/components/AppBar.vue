@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="app-bar">
-      <mu-appbar title="V2EX"></mu-appbar>
+      <router-link to="/">
+        <mu-appbar title="V2EX"></mu-appbar>
+      </router-link>
     </div>
     <div class="app-tabs">
       <mu-tabs :value="activeTab" @change="handleTabChange">
@@ -11,7 +13,7 @@
         <mu-tab value="nodes" title="节点" @click="processTarget('nodes')"></mu-tab>
       </mu-tabs>
       <div v-if="activeTab === 'latest'">
-        <ul v-for="article in this.$store.state.latestJSON.articles">
+        <ul v-for="topic in this.$store.state.topics">
           <!-- 栅格化系统 -->
           <mu-row gutter>
             <mu-col desktop="20"></mu-col>
@@ -19,15 +21,15 @@
               <!-- 卡片布局 -->
               <mu-card>
                 <!-- 卡片 header，显示头像和用户名 -->
-                <mu-card-header :title="article.member.username">
-                  <mu-avatar :src="article.member.avatar_normal" slot="avatar"></mu-avatar>
+                <mu-card-header :title="topic.member.username" class="center">
+                  <mu-avatar :src="topic.member.avatar_normal" slot="avatar"></mu-avatar>
                 </mu-card-header>
                 <!-- 标题链接 -->
-                <router-link :to="{ name: 'Topic', params: { id: article.id} }">
-                  <mu-card-title :title="article.title"></mu-card-title>
+                <router-link :to="{ name: 'Topic', params: { id: topic.id} }">
+                  <mu-card-title :title="topic.title"></mu-card-title>
                 </router-link>
                 <!-- 渲染过的文章内容 -->
-                <mu-card-text v-html="article.content_rendered"></mu-card-text>
+                <mu-card-text v-html="topic.content_rendered"></mu-card-text>
                 <!-- 评论按钮，点击后弹出评论弹框 -->
               </mu-card>
             </mu-col>
@@ -36,18 +38,18 @@
         </ul>
       </div>
       <div v-if="activeTab === 'hot'">
-        <ul v-for="article in this.$store.state.latestJSON.articles">
+        <ul v-for="topic in this.$store.state.topics">
           <mu-row gutter>
             <mu-col desktop="20"></mu-col>
             <mu-col desktop="60">
               <mu-card>
-                <mu-card-header :title="article.member.username">
-                  <mu-avatar :src="article.member.avatar_normal" slot="avatar"></mu-avatar>
+                <mu-card-header :title="topic.member.username" class="center">
+                  <mu-avatar :src="topic.member.avatar_normal" slot="avatar"></mu-avatar>
                 </mu-card-header>
-                <a :href="article.url">
-                  <mu-card-title :title="article.title"></mu-card-title>
-                </a>
-                <mu-card-text v-html="article.content_rendered"></mu-card-text>
+                <router-link :to="{ name: 'Topic', params: { id: topic.id} }">
+                  <mu-card-title :title="topic.title"></mu-card-title>
+                </router-link>
+                <mu-card-text v-html="topic.content_rendered"></mu-card-text>
               </mu-card>
             </mu-col>
             <mu-col desktop="20"></mu-col>
@@ -55,18 +57,18 @@
         </ul>
       </div>
       <div v-if="activeTab === 'tech'">
-        <ul v-for="article in this.$store.state.latestJSON.articles">
+        <ul v-for="topic in this.$store.state.topics">
           <mu-row gutter>
             <mu-col desktop="20"></mu-col>
             <mu-col desktop="60">
               <mu-card>
-                <mu-card-header :title="article.member.username">
-                  <mu-avatar :src="article.member.avatar_normal" slot="avatar"></mu-avatar>
+                <mu-card-header :title="topic.member.username" class="center">
+                  <mu-avatar :src="topic.member.avatar_normal" slot="avatar"></mu-avatar>
                 </mu-card-header>
-                <a :href="article.url">
-                  <mu-card-title :title="article.title"></mu-card-title>
-                </a>
-                <mu-card-text v-html="article.content_rendered"></mu-card-text>
+                <router-link :to="{ name: 'Topic', params: { id: topic.id} }">
+                  <mu-card-title :title="topic.title"></mu-card-title>
+                </router-link>
+                <mu-card-text v-html="topic.content_rendered"></mu-card-text>
               </mu-card>
             </mu-col>
             <mu-col desktop="20"></mu-col>
@@ -112,43 +114,25 @@
         activeTab: 'latest',
         open: false,
         docked: true,
-        articles: null,
-        bottomPopup: false
+        articles: null
       }
     },
     methods: {
       handleTabChange (val) {
         this.activeTab = val
       },
-      handleOpenPopup (position, id) {
-        // 响应点击操作
-        this.openPopup(position)
-        // 加载相应的回复
-        this.$store.dispatch('getReplies', id)
-      },
-      openPopup (position) {
-        this[position + 'Popup'] = true
-      },
-      closePopup (position) {
-        this[position + 'Popup'] = false
-        this.$store.state.replies = null
-      },
       processTarget (type) {
         switch (type) {
           case 'latest':
-            console.log('latest')
-            this.$store.dispatch('getArticles', 'https://www.v2ex.com/api/topics/latest.json')
+            this.$store.dispatch('getArticles', this.$store.state.domain + this.$store.state.api.latest)
             break
           case 'hot':
-            console.log('hot')
-            this.$store.dispatch('getArticles', 'https://www.v2ex.com/api/topics/hot.json')
+            this.$store.dispatch('getArticles', this.$store.state.domain + this.$store.state.api.hot)
             break
           case 'tech':
-            console.log('tech')
-            this.$store.dispatch('getArticles', 'https://www.v2ex.com/api/topics/show.json?node_name=tech')
+            this.$store.dispatch('getArticles', this.$store.state.domain + this.$store.state.api.topicByNodeName + 'tech')
             break
           case 'nodes':
-            console.log('nodes')
             this.$store.dispatch('getNodes')
             break
           default:
@@ -181,19 +165,6 @@
 
   img {
     width: calc(100%);
-  }
-
-  .popup-bottom {
-    width: calc(55%);
-    top: 100px !important;
-  }
-
-  .reply-content {
-    overflow: scroll !important;
-  }
-
-  .reply-username {
-    color: #7e57c2;
   }
 
   /* 子元素垂直居中 */
