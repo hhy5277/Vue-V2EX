@@ -1,10 +1,11 @@
 <template>
   <div>
     <div class="app-bar">
-      <!-- 跳转到主页 -->
-      <router-link to="/">
-        <mu-appbar title="V2EX"></mu-appbar>
-      </router-link>
+      <mu-appbar title="V2EX" class="center">
+        <a href="https://github.com/igaozp/vue-v2ex" slot="right">
+          <img src="../assets/GitHub.png" class="icon"/>
+        </a>
+      </mu-appbar>
     </div>
     <mu-row gutter>
       <mu-col desktop="20"></mu-col>
@@ -69,7 +70,7 @@
   import MuCardHeader from '../../node_modules/muse-ui/src/card/cardHeader'
   import MuAvatar from '../../node_modules/muse-ui/src/avatar/avatar'
   import MuChip from '../../node_modules/muse-ui/src/chip/chip'
-  import { mapState } from 'vuex'
+  import {mapState} from 'vuex'
 
   export default {
     components: {
@@ -121,5 +122,10 @@
   .chip {
     margin-left: 15px;
     margin-bottom: 10px;
+  }
+
+  .icon {
+    width: 30px;
+    height: 30px;
   }
 </style>

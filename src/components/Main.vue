@@ -1,10 +1,11 @@
 <template>
   <div>
     <div class="app-bar">
-      <!-- 跳转到首页 -->
-      <router-link to="/">
-        <mu-appbar title="V2EX"></mu-appbar>
-      </router-link>
+      <mu-appbar title="V2EX" class="center">
+        <a href="https://github.com/igaozp/vue-v2ex" slot="right">
+          <img src="../assets/GitHub.png" class="icon"/>
+        </a>
+      </mu-appbar>
     </div>
     <div class="app-tabs">
       <mu-tabs :value="activeTab" @change="handleTabChange">
@@ -91,7 +92,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import {mapState} from 'vuex'
   import MuAvatar from '../../node_modules/muse-ui/src/avatar/avatar'
   import MuCardTitle from '../../node_modules/muse-ui/src/card/cardTitle'
   import MuFlexbox from '../../node_modules/muse-ui/src/flexbox/flexbox'
@@ -101,9 +102,11 @@
   import MuAppbar from '../../node_modules/muse-ui/src/appBar/appBar'
   import MuFlatButton from '../../node_modules/muse-ui/src/flatButton/flatButton'
   import MuContentBlock from '../../node_modules/muse-ui/src/contentBlock/contentBlock'
+  import MuIconMenu from '../../node_modules/muse-ui/src/iconMenu/iconMenu'
 
   export default {
     components: {
+      MuIconMenu,
       MuContentBlock,
       MuFlatButton,
       MuAppbar,
@@ -182,4 +185,8 @@
     align-items: center;
   }
 
+  .icon {
+    width: 30px;
+    height: 30px;
+  }
 </style>
