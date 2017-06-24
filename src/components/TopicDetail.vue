@@ -9,21 +9,21 @@
     <mu-row gutter>
       <mu-col desktop="20"></mu-col>
       <mu-col desktop="60">
-        <div v-if="this.$store.state.topic">
+        <div v-if="this.topic">
           <!-- 显示主题详细信息 -->
           <mu-card class="topic_card">
             <!-- 用户名及头像 -->
-            <mu-card-header :title="this.$store.state.topic.member.username" class="center">
-              <mu-avatar :src="this.$store.state.topic.member.avatar_large" :size="50" slot="avatar"></mu-avatar>
+            <mu-card-header :title="this.topic.member.username" class="center">
+              <mu-avatar :src="this.topic.member.avatar_large" :size="50" slot="avatar"></mu-avatar>
             </mu-card-header>
             <!-- 文章标题 -->
-            <mu-card-title :title="this.$store.state.topic.title"></mu-card-title>
+            <mu-card-title :title="this.topic.title"></mu-card-title>
             <!-- 文章内容 -->
-            <mu-card-text v-html="this.$store.state.topic.content_rendered"></mu-card-text>
+            <mu-card-text v-html="this.topic.content_rendered"></mu-card-text>
             <!-- 文章节点信息 -->
             <mu-chip class="chip">
-              <mu-avatar :src="this.$store.state.topic.node.avatar_mini" :size="25"></mu-avatar>
-              {{ this.$store.state.topic.node.title }}
+              <mu-avatar :src="this.topic.node.avatar_mini" :size="25"></mu-avatar>
+              {{ this.topic.node.title }}
             </mu-chip>
           </mu-card>
         </div>
@@ -36,9 +36,9 @@
       <mu-col desktop="60">
         <!-- 显示主题回复信息 -->
         <mu-card class="reply_card">
-          <div v-if="this.$store.state.replies && this.$store.state.replies.length !== 0">
+          <div v-if="this.replies && this.replies.length !== 0">
             <mu-content-block>
-              <ul v-for="reply in this.$store.state.replies">
+              <ul v-for="reply in this.replies">
                 <li>
                   <mu-row gutter class="center">
                     <mu-col desktop="10">
@@ -69,6 +69,7 @@
   import MuCardHeader from '../../node_modules/muse-ui/src/card/cardHeader'
   import MuAvatar from '../../node_modules/muse-ui/src/avatar/avatar'
   import MuChip from '../../node_modules/muse-ui/src/chip/chip'
+  import { mapState } from 'vuex'
 
   export default {
     components: {
@@ -76,12 +77,10 @@
       MuAvatar,
       MuCardHeader
     },
-    data () {
-      return {
-        topic: null,
-        replies: null
-      }
-    },
+    computed: mapState({
+      topic: state => state.topic,
+      replies: state => state.replies
+    }),
     created () {
       // 页面加载时从 API 获取数据
       this.$store.dispatch('getArticleAndReplies', this.$route.params.id)

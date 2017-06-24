@@ -13,7 +13,7 @@
         <mu-tab value="nodes" title="节点" @click="processTarget('nodes')"></mu-tab>
       </mu-tabs>
       <div v-if="activeTab === 'latest'">
-        <ul v-for="topic in this.$store.state.topics">
+        <ul v-for="topic in this.topics">
           <!-- 栅格化系统 -->
           <mu-row gutter>
             <mu-col desktop="20"></mu-col>
@@ -38,7 +38,7 @@
         </ul>
       </div>
       <div v-if="activeTab === 'hot'">
-        <ul v-for="topic in this.$store.state.topics">
+        <ul v-for="topic in this.topics">
           <mu-row gutter>
             <mu-col desktop="20"></mu-col>
             <mu-col desktop="60">
@@ -57,7 +57,7 @@
         </ul>
       </div>
       <div v-if="activeTab === 'tech'">
-        <ul v-for="topic in this.$store.state.topics">
+        <ul v-for="topic in this.topics">
           <mu-row gutter>
             <mu-col desktop="20"></mu-col>
             <mu-col desktop="60">
@@ -77,7 +77,7 @@
       </div>
       <div v-if="activeTab === 'nodes'">
         <h2>节点</h2>
-        <ul v-for="node in this.$store.state.nodes">
+        <ul v-for="node in this.nodes">
           <li>{{ node.title }}</li>
         </ul>
       </div>
@@ -86,6 +86,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   import MuAvatar from '../../node_modules/muse-ui/src/avatar/avatar'
   import MuCardTitle from '../../node_modules/muse-ui/src/card/cardTitle'
   import MuFlexbox from '../../node_modules/muse-ui/src/flexbox/flexbox'
@@ -113,10 +114,16 @@
       return {
         activeTab: 'latest',
         open: false,
-        docked: true,
-        articles: null
+        docked: true
+//        articles: null
       }
     },
+    computed: mapState({
+      domain: state => state.domain,
+      api: state => state.api,
+      topics: state => state.topics,
+      nodes: state => state.nodes
+    }),
     methods: {
       handleTabChange (val) {
         this.activeTab = val
@@ -124,13 +131,13 @@
       processTarget (type) {
         switch (type) {
           case 'latest':
-            this.$store.dispatch('getArticles', this.$store.state.domain + this.$store.state.api.latest)
+            this.$store.dispatch('getArticles', this.domain + this.api.latest)
             break
           case 'hot':
-            this.$store.dispatch('getArticles', this.$store.state.domain + this.$store.state.api.hot)
+            this.$store.dispatch('getArticles', this.domain + this.api.hot)
             break
           case 'tech':
-            this.$store.dispatch('getArticles', this.$store.state.domain + this.$store.state.api.topicByNodeName + 'tech')
+            this.$store.dispatch('getArticles', this.domain + this.api.topicByNodeName + 'tech')
             break
           case 'nodes':
             this.$store.dispatch('getNodes')
