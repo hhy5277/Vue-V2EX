@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="app-bar">
+      <!-- 跳转到首页 -->
       <router-link to="/">
         <mu-appbar title="V2EX"></mu-appbar>
       </router-link>
@@ -10,8 +11,8 @@
         <mu-tab value="latest" title="最新" @click="processTarget('latest')"></mu-tab>
         <mu-tab value="hot" title="最热" @click="processTarget('hot')"></mu-tab>
         <mu-tab value="tech" title="技术" @click="processTarget('tech')"></mu-tab>
-        <mu-tab value="nodes" title="节点" @click="processTarget('nodes')"></mu-tab>
       </mu-tabs>
+      <!-- 社区最新的主题 -->
       <div v-if="activeTab === 'latest'">
         <ul v-for="topic in this.topics">
           <!-- 栅格化系统 -->
@@ -37,18 +38,23 @@
           </mu-row>
         </ul>
       </div>
+      <!-- 社区当前最热的主题 -->
       <div v-if="activeTab === 'hot'">
         <ul v-for="topic in this.topics">
           <mu-row gutter>
             <mu-col desktop="20"></mu-col>
             <mu-col desktop="60">
+              <!-- 信息卡片 -->
               <mu-card>
+                <!-- 用户名和头像 -->
                 <mu-card-header :title="topic.member.username" class="center">
                   <mu-avatar :src="topic.member.avatar_normal" slot="avatar"></mu-avatar>
                 </mu-card-header>
+                <!-- 跳转到主题详情页面 -->
                 <router-link :to="{ name: 'Topic', params: { id: topic.id} }">
                   <mu-card-title :title="topic.title"></mu-card-title>
                 </router-link>
+                <!-- 当前主题内容 -->
                 <mu-card-text v-html="topic.content_rendered"></mu-card-text>
               </mu-card>
             </mu-col>
@@ -56,29 +62,28 @@
           </mu-row>
         </ul>
       </div>
+      <!-- 社区科技节点下的主题 -->
       <div v-if="activeTab === 'tech'">
         <ul v-for="topic in this.topics">
           <mu-row gutter>
             <mu-col desktop="20"></mu-col>
             <mu-col desktop="60">
+              <!-- 信息卡片 -->
               <mu-card>
+                <!-- 用户名和头像 -->
                 <mu-card-header :title="topic.member.username" class="center">
                   <mu-avatar :src="topic.member.avatar_normal" slot="avatar"></mu-avatar>
                 </mu-card-header>
+                <!-- 跳转到主题详情页面 -->
                 <router-link :to="{ name: 'Topic', params: { id: topic.id} }">
                   <mu-card-title :title="topic.title"></mu-card-title>
                 </router-link>
+                <!-- 主题内容 -->
                 <mu-card-text v-html="topic.content_rendered"></mu-card-text>
               </mu-card>
             </mu-col>
             <mu-col desktop="20"></mu-col>
           </mu-row>
-        </ul>
-      </div>
-      <div v-if="activeTab === 'nodes'">
-        <h2>节点</h2>
-        <ul v-for="node in this.nodes">
-          <li>{{ node.title }}</li>
         </ul>
       </div>
     </div>
@@ -115,7 +120,6 @@
         activeTab: 'latest',
         open: false,
         docked: true
-//        articles: null
       }
     },
     computed: mapState({
@@ -138,9 +142,6 @@
             break
           case 'tech':
             this.$store.dispatch('getArticles', this.domain + this.api.topicByNodeName + 'tech')
-            break
-          case 'nodes':
-            this.$store.dispatch('getNodes')
             break
           default:
             console.log('nothing')
